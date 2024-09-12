@@ -1,10 +1,10 @@
-package dio.spring_web_api;
+package dio.webapi;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SpringWebApiApplicationTests {
+class WebapiApplicationTests {
 
 	@Test
 	void contextLoads() {
