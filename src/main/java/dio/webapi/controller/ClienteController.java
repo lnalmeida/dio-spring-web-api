@@ -7,9 +7,11 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLOutput;
@@ -79,9 +81,12 @@ public class ClienteController {
                             "'nome':'João'," +
                             "'email':'joão@teste.com'," +
                             "'cpf':'111.111.111-11 || 11111111111'," +
-                            "}")
+                            "}"
+            )
+            @Valid
             @RequestBody ClienteRequestDto data
     ) {
+
         clienteService.addCliente(data);
         return new ResponseEntity<>("Cliente adicionado com sucesso", HttpStatus.CREATED);
     }
@@ -100,8 +105,10 @@ public class ClienteController {
                     example = "{" +
                             "'nome':'João'," +
                             "'email':'joão@teste.com'," +
-                            "'cpf':'111.111.111-11 || 11111111111'," +
-                            "}")
+                            "'cpf':'11111111111'" +
+                            "}"
+            )
+            @Valid
             @RequestBody ClienteRequestDto data
     ) {
         if(clienteService.updateCliente(id, data).isEmpty()) {
