@@ -4,6 +4,7 @@ import jakarta.annotation.Resource;
 import org.springframework.cglib.proxy.UndeclaredThrowableException;
 import org.springframework.context.MessageSource;
 import org.springframework.http.*;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -40,11 +41,11 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
 
-//    @ExceptionHandler({BusinessException.class})
-//    public  ResponseEntity<Object> handleBusinessException(BusinessException e, WebRequest request) {
-//        ResponseError error = responseError(e.getMessage(), HttpStatus.CONFLICT);
-//        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
-//    }
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<Object> handleAccessDeniedException(AccessDeniedException e, WebRequest request) {
+        ResponseError error = responseError("Acesso negado", HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
+    }
 
     @ExceptionHandler(Exception.class)
     public  ResponseEntity<Object> handleGeneral(Exception e, WebRequest request) {
